@@ -1,14 +1,25 @@
 import 'package:body_king/router/index.dart';
-import 'package:body_king/utils/global.dart';
+import 'package:body_king/store/global.dart';
+import 'package:body_king/store/workout.dart';
 import 'package:body_king/utils/storage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   // 确保 Flutter 绑定被初始化
   WidgetsFlutterBinding.ensureInitialized();
   await LocalStorage.init();
-  await GlobalManager().init();
-  runApp(const MyApp());
+  final globalState = GlobalState();
+  await globalState.init();
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => WorkoutProvider()),
+        ChangeNotifierProvider(create: (context) => GlobalState()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -21,7 +32,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: GlobalManager().token == null ? '/login' : '/',
+      initialRoute: '/splash',
       routes: AppRoutes.routes,
     );
   }

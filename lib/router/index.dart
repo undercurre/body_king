@@ -1,17 +1,20 @@
 // app_routes.dart
 
+import 'package:body_king/pages/main_index.dart';
+import 'package:body_king/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../pages/home_page.dart';
+import '../pages/home/home_page.dart';
 import '../pages/login_page.dart';
 
 class AppRoutes {
 
   static Map<String, WidgetBuilder> get routes {
     return {
-      '/': (context) => const HomePage(),
+      '/': (context) => MainIndex(),
+      '/splash': (context) => const SplashScreen(),
       '/login': (context) => const LoginPage(),
-      '/home': (context) => const HomePage()
+      '/home': (context) => MainIndex()
     };
   }
 

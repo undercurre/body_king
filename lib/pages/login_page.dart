@@ -33,9 +33,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       ApiResponse<PublicKeyResponse> response = await _authApi.getPublicKey();
       if (kDebugMode) {
-        print('qian');
         print(response.data.publicKey);
-        print('hou');
       }
       setState(() {
         _publicKey = parsePublicKeyFromPem(response.data.publicKey); // Adjust according to your response structure
@@ -83,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
 
         await LocalStorage().set('token', response.data.access_token);
 
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/');
         // Handle successful login
       } catch (e) {
         if (kDebugMode) {

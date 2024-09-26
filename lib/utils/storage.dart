@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorage {
@@ -31,14 +33,28 @@ class LocalStorage {
       await _prefs?.setDouble(key, value);
     } else if (value is List<String>) {
       await _prefs?.setStringList(key, value);
+    } else if (value is Map<String, dynamic>) {
+    // 将 Map 转换为 JSON 字符串
+      await _prefs?.setString(key, jsonEncode(value));
     } else {
       throw Exception("Unsupported value type");
     }
   }
 
   // 获取字符串值
-  String? get(String key) {
-    return _prefs?.getString(key);
+  dynamic get(String key) {
+    // 获取存储的字符串
+    final String? value = _prefs?.getString(key);
+    if (value != null) {
+      try {
+        // 尝试将 JSON 字符串解析为 Map
+        return jsonDecode(value);
+      } catch (e) {
+        // 解析失败，返回原始字符串
+        return value;
+      }
+    }
+    return null;
   }
 
   // 清除所有偏好设置
