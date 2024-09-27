@@ -11,6 +11,8 @@ import '../../store/global.dart';
 import '../../store/workout.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }

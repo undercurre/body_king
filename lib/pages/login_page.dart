@@ -118,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _passwordController,
                 decoration: const InputDecoration(
@@ -145,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                       _login();
                     }
                   },
-                  child: Text('Login'),
+                  child: const Text('Login'),
                 ),
               ),
             ],
