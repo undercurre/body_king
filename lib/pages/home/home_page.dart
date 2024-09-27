@@ -1,4 +1,5 @@
 import 'package:body_king/pages/home/components/avatar.dart';
+import 'package:body_king/pages/home/components/progress_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -58,19 +59,105 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(children: [Text('Hi, ${userInfo?.username}', style: ])]),
-                  Avatar(src: 'https://cdn.pixabay.com/photo/2023/06/23/11/23/ai-generated-8083323_640.jpg')
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Hi, ${userInfo?.username}',
+                          style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w700),
+                        ),
+                        const Text(
+                          "Great start of the day, a little more to reach today's goals",
+                          style: TextStyle(fontSize: 16, color: Colors.black45),
+                        )
+                      ],
+                    ),
+                  ),
+                  const Avatar(src: 'https://cdn.pixabay.com/photo/2023/06/23/11/23/ai-generated-8083323_640.jpg')
                 ],
               ),
-              Text('Weekly Weight Loss: ${weeklyWeightLoss.toStringAsFixed(2)} kg'),
-              Text('Monthly Weight Loss: ${monthlyWeightLoss.toStringAsFixed(2)} kg'),
-              Text('Quarterly Weight Loss: ${quarterlyWeightLoss.toStringAsFixed(2)} kg'),
-              // Add more widgets to display and record workouts
+              const SizedBox(height: 32),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "today' situation",
+                    style: TextStyle(fontSize: 16, color: Colors.black45),
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 300,
+                    child: GridView.count(
+                      crossAxisCount: 2,
+                      childAspectRatio: 3 / 2,
+                      children: [
+                        ProgressCard(
+                          icon: Icons.sports_tennis,
+                          name: 'tennis',
+                          progress: 0.6,
+                          trend: Trend.up,
+                          backgroundColor: Colors.redAccent.shade100,
+                        ),
+                        ProgressCard(
+                          icon: Icons.monitor_weight,
+                          name: 'Weight',
+                          progress: 0.5,
+                          trend: Trend.down,
+                          backgroundColor: Colors.lightGreenAccent.shade100,
+                        ),
+                        ProgressCard(
+                          icon: Icons.directions_run,
+                          name: 'Running',
+                          progress: 0.9,
+                          trend: Trend.equal,
+                          backgroundColor: Colors.lightBlueAccent.shade100,
+                        ),
+                        ProgressCard(
+                          icon: Icons.local_drink,
+                          name: 'Hydration',
+                          progress: 0.8,
+                          trend: Trend.up,
+                          backgroundColor: Colors.purple.shade100,
+                        ),
+                        ProgressCard(
+                          icon: Icons.sports_tennis,
+                          name: 'tennis',
+                          progress: 0.6,
+                          trend: Trend.up,
+                          backgroundColor: Colors.redAccent.shade100,
+                        ),
+                        ProgressCard(
+                          icon: Icons.monitor_weight,
+                          name: 'Weight',
+                          progress: 0.5,
+                          trend: Trend.down,
+                          backgroundColor: Colors.lightGreenAccent.shade100,
+                        ),
+                        ProgressCard(
+                          icon: Icons.directions_run,
+                          name: 'Running',
+                          progress: 0.9,
+                          trend: Trend.equal,
+                          backgroundColor: Colors.lightBlueAccent.shade100,
+                        ),
+                        ProgressCard(
+                          icon: Icons.local_drink,
+                          name: 'Hydration',
+                          progress: 0.8,
+                          trend: Trend.up,
+                          backgroundColor: Colors.purple.shade100,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
