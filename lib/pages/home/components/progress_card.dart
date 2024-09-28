@@ -5,7 +5,8 @@ enum Trend { up, down, equal }
 class ProgressCard extends StatefulWidget {
   final IconData icon;
   final String name;
-  final double progress; // 从 0.0 到 1.0
+  final num target;
+  final num current;
   final Trend trend;
   final Color backgroundColor;
 
@@ -13,7 +14,8 @@ class ProgressCard extends StatefulWidget {
     Key? key,
     required this.icon,
     required this.name,
-    required this.progress,
+    required this.current,
+    required this.target,
     required this.trend,
     required this.backgroundColor,
   }) : super(key: key);
@@ -60,7 +62,7 @@ class _ProgressCardState extends State<ProgressCard> {
             ),
             const SizedBox(height: 10),
             LinearProgressIndicator(
-              value: widget.progress,
+              value: double.parse((widget.current / widget.target).toStringAsFixed(1)),
               backgroundColor: Colors.black12,
               valueColor: const AlwaysStoppedAnimation<Color>(Colors.black54),
             ),
