@@ -1,5 +1,6 @@
 import 'package:body_king/pages/home/components/avatar.dart';
 import 'package:body_king/pages/home/components/progress_card.dart';
+import 'package:body_king/pages/home/task_completion.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,6 @@ class _HomePageState extends State<HomePage> {
   double weeklyWeightLoss = 0;
   double monthlyWeightLoss = 0;
   double quarterlyWeightLoss = 0;
-
 
   final List<Map<String, dynamic>> progressData = [
     {
@@ -214,6 +214,13 @@ class _HomePageState extends State<HomePage> {
                           current: data['current'],
                           trend: data['trend'],
                           backgroundColor: data['backgroundColor'],
+                          onTap: () => {
+                            Navigator.pushNamed(
+                              context,
+                              '/taskCompletion',
+                              arguments: data['name'],
+                            )
+                          },
                         );
                       },
                     ),
