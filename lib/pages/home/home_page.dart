@@ -24,6 +24,90 @@ class _HomePageState extends State<HomePage> {
   double monthlyWeightLoss = 0;
   double quarterlyWeightLoss = 0;
 
+
+  final List<Map<String, dynamic>> progressData = [
+    {
+      'icon': Icons.directions_walk,
+      'name': 'Walk',
+      'target': 6000,
+      'current': 3000,
+      'trend': Trend.up,
+      'backgroundColor': Colors.redAccent.shade100,
+    },
+    {
+      'icon': Icons.monitor_weight,
+      'name': 'Weight',
+      'target': 70,
+      'current': 75,
+      'trend': Trend.down,
+      'backgroundColor': Colors.lightGreenAccent.shade100,
+    },
+    {
+      'icon': Icons.bed,
+      'name': 'Sleep',
+      'target': 8,
+      'current': 6,
+      'trend': Trend.equal,
+      'backgroundColor': Colors.purple.shade100,
+    },
+    {
+      'icon': Icons.water_drop,
+      'name': 'Water',
+      'target': 8,
+      'current': 4,
+      'trend': Trend.up,
+      'backgroundColor': Colors.lightBlueAccent.shade100,
+    },
+    {
+      'icon': Icons.local_drink,
+      'name': 'Drinks',
+      'target': 2,
+      'current': 1,
+      'trend': Trend.up,
+      'backgroundColor': Colors.blueGrey.shade100,
+    },
+    {
+      'icon': Icons.code,
+      'name': 'Code',
+      'target': 8,
+      'current': 4,
+      'trend': Trend.down,
+      'backgroundColor': Colors.deepOrange.shade100,
+    },
+    {
+      'icon': Icons.fastfood,
+      'name': 'Snack',
+      'target': 3,
+      'current': 2,
+      'trend': Trend.equal,
+      'backgroundColor': Colors.red.shade200,
+    },
+    {
+      'icon': Icons.games,
+      'name': 'Game',
+      'target': 2,
+      'current': 1,
+      'trend': Trend.up,
+      'backgroundColor': Colors.brown.shade100,
+    },
+    {
+      'icon': Icons.sports,
+      'name': 'Sport',
+      'target': 2,
+      'current': 1,
+      'trend': Trend.up,
+      'backgroundColor': Colors.green.shade100,
+    },
+    {
+      'icon': Icons.music_video,
+      'name': 'Music',
+      'target': 2,
+      'current': 1,
+      'trend': Trend.up,
+      'backgroundColor': Colors.blue.shade100,
+    },
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -58,10 +142,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: null,
       body: Container(
-        padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: SingleChildScrollView(
           child: Column(
             children: [
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                   const Avatar(src: 'https://cdn.pixabay.com/photo/2023/06/23/11/23/ai-generated-8083323_640.jpg')
                 ],
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 12),
               QuoteCard(
                 quotes: const [
                   {
@@ -111,77 +196,26 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 10),
                   Container(
-                    color: Colors.grey,
-                    height: 800,
-                    child: GridView.count(
-                      crossAxisCount: 2,
-                      childAspectRatio: 3 / 2,
-                      children: [
-                        ProgressCard(
-                          icon: Icons.directions_walk,
-                          name: 'Walk',
-                          target: 6000,
-                          current: 3000,
-                          trend: Trend.up,
-                          backgroundColor: Colors.redAccent.shade100,
-                        ),
-                        ProgressCard(
-                          icon: Icons.monitor_weight,
-                          name: 'Weight',
-                          target: 6000,
-                          current: 3000,
-                          trend: Trend.down,
-                          backgroundColor: Colors.lightGreenAccent.shade100,
-                        ),
-                        ProgressCard(
-                          icon: Icons.bed,
-                          name: 'Sleep',
-                          target: 6000,
-                          current: 3000,
-                          trend: Trend.equal,
-                          backgroundColor: Colors.purple.shade100,
-                        ),
-                        ProgressCard(
-                          icon: Icons.water_drop,
-                          name: 'Hydration',
-                          target: 6000,
-                          current: 3000,
-                          trend: Trend.up,
-                          backgroundColor: Colors.lightBlueAccent.shade100,
-                        ),
-                        ProgressCard(
-                          icon: Icons.local_drink,
-                          name: 'tennis',
-                          target: 6000,
-                          current: 3000,
-                          trend: Trend.up,
-                          backgroundColor: Colors.blueGrey.shade100,
-                        ),
-                        ProgressCard(
-                          icon: Icons.monitor_weight,
-                          name: 'Weight',
-                          target: 6000,
-                          current: 3000,
-                          trend: Trend.down,
-                          backgroundColor: Colors.lightGreenAccent.shade100,
-                        ),
-                        ProgressCard(
-                          icon: Icons.directions_run,
-                          name: 'Running',
-                          target: 6000,
-                          current: 3000,
-                          trend: Trend.equal,
-                          backgroundColor: Colors.lightBlueAccent.shade100,
-                        ),
-                        ProgressCard(
-                          icon: Icons.local_drink,
-                          name: 'Hydration',
-                          target: 6000,
-                          current: 3000,
-                          trend: Trend.up,
-                          backgroundColor: Colors.purple.shade100,
-                        ),
-                      ],
+                    color: Colors.transparent,
+                    height: 650,
+                    child: GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 3 / 2,
+                      ),
+                      itemCount: progressData.length,
+                      itemBuilder: (context, index) {
+                        final data = progressData[index];
+                        return ProgressCard(
+                          icon: data['icon'],
+                          name: data['name'],
+                          target: data['target'],
+                          current: data['current'],
+                          trend: data['trend'],
+                          backgroundColor: data['backgroundColor'],
+                        );
+                      },
                     ),
                   ),
                 ],

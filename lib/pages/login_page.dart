@@ -52,23 +52,30 @@ class _LoginPageState extends State<LoginPage> {
   void _login() async {
     if ((_formKey.currentState?.validate() ?? false) &&  _publicKey != null) {
       try {
-        print('开始加密');
         // 生成随机对称密钥
         final symmetricKey = generateRandomKey(32);
         final symmetricKeyBase64 = base64.encode(symmetricKey);
-        print('Generated Symmetric Key (Base64): $symmetricKeyBase64');
+        if (kDebugMode) {
+          print('Generated Symmetric Key (Base64): $symmetricKeyBase64');
+        }
 
         // 对密码进行哈希
         final hashedPassword = sha256.convert(utf8.encode(_passwordController.text)).toString();
-        print('Hashed Password: $hashedPassword');
+        if (kDebugMode) {
+          print('Hashed Password: $hashedPassword');
+        }
 
         // 使用对称密钥加密哈希后的密码
         final encryptedPassword = encryptWithAES(hashedPassword, symmetricKey);
-        print('Encrypted Password: $encryptedPassword');
+        if (kDebugMode) {
+          print('Encrypted Password: $encryptedPassword');
+        }
 
         // 使用公钥加密对称密钥
         final encryptedSymmetricKey = encryptWithRSA(symmetricKeyBase64, _publicKey!);
-        print('Encrypted Symmetric Key (Base64): $encryptedSymmetricKey');
+        if (kDebugMode) {
+          print('Encrypted Symmetric Key (Base64): $encryptedSymmetricKey');
+        }
 
         final response = await _authApi.login(
           _usernameController.text, encryptedPassword.encrypted,

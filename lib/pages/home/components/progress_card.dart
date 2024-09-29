@@ -43,9 +43,7 @@ class _ProgressCardState extends State<ProgressCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Icon(widget.icon, size: 40, color: Colors.black),
                   const SizedBox(width: 10),
                   Text(
@@ -57,7 +55,17 @@ class _ProgressCardState extends State<ProgressCard> {
                     ),
                   )
                 ]),
-                _buildTrendIcon(widget.trend),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    _buildTrendIcon(widget.trend),
+                    Text(
+                      '${widget.current} / ${widget.target}',
+                      style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w900),
+                    )
+                  ],
+                )
               ],
             ),
             const SizedBox(height: 10),

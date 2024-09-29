@@ -1,7 +1,8 @@
 import 'package:body_king/pages/home/home_page.dart';
-import 'package:body_king/pages/profile_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'mine/profile_page.dart';
 
 class MainIndex extends StatefulWidget {
   const MainIndex({super.key});
@@ -14,8 +15,7 @@ class _HomePageState extends State<MainIndex> {
   int _selectedIndex = 0; // 当前选中的索引
   final List<Widget> _pages = [
     HomePage(),
-    ProfilePage(),
-    ProfilePage(),
+    UserProfilePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -36,10 +36,6 @@ class _HomePageState extends State<MainIndex> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sports),
-            label: 'Go',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
