@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainIndex extends StatefulWidget {
+  const MainIndex({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }

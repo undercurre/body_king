@@ -5,6 +5,8 @@ import '../store/global.dart';
 import '../utils/timeFilter.dart';
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -59,7 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 }
               },
               child: InputDecorator(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Birthday',
                   border: OutlineInputBorder(),
                 ),
@@ -70,9 +72,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             DropdownButtonFormField<String>(
-              decoration: InputDecoration(labelText: 'Gender'),
+              decoration: const InputDecoration(labelText: 'Gender'),
               value: _selectedGender,
               items: ['male', 'female']
                   .map((gender) => DropdownMenuItem(
@@ -86,7 +88,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 });
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 if (_heightController.text.isNotEmpty &&
@@ -108,15 +110,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   });
                   // 可选：显示成功消息或导航到其他页面
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Profile updated!')),
+                    const SnackBar(content: Text('Profile updated!')),
                   );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Please fill in all fields.')),
+                    const SnackBar(content: Text('Please fill in all fields.')),
                   );
                 }
               },
-              child: Text('Submit'),
+              child: const Text('Submit'),
             ),
           ],
         ),
