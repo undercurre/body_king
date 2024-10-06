@@ -10,8 +10,7 @@ class QuoteCard extends StatefulWidget {
   _QuoteCardState createState() => _QuoteCardState();
 }
 
-class _QuoteCardState extends State<QuoteCard>
-    with SingleTickerProviderStateMixin {
+class _QuoteCardState extends State<QuoteCard> with SingleTickerProviderStateMixin {
   int _currentQuoteIndex = 0;
   bool _isAutoSwitching = true;
   Timer? _timer;
@@ -25,7 +24,17 @@ class _QuoteCardState extends State<QuoteCard>
       vsync: this,
     );
 
-    _startAutoSwitch();
+    if (widget.quotes.isNotEmpty) {
+      _startAutoSwitch();
+    }
+  }
+
+  @override
+  void didUpdateWidget(QuoteCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.quotes != oldWidget.quotes) {
+      _resetAutoSwitch();
+    }
   }
 
   @override
@@ -46,6 +55,12 @@ class _QuoteCardState extends State<QuoteCard>
     });
   }
 
+  void _resetAutoSwitch() {
+    _timer?.cancel();
+    _currentQuoteIndex = 0;
+    _startAutoSwitch();
+  }
+
   void _toggleAutoSwitch() {
     setState(() {
       _isAutoSwitching = !_isAutoSwitching;
@@ -54,12 +69,35 @@ class _QuoteCardState extends State<QuoteCard>
 
   void _nextQuote() {
     setState(() {
-      _currentQuoteIndex = (_currentQuoteIndex + 1) % widget.quotes.length;
+      _currentQuoteIndex = widget.quotes.length != 0 ? (_currentQuoteIndex + 1) % widget.quotes.length : 0;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.quotes.isEmpty) {
+      return Card(
+        margin: const EdgeInsets.all(16.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        elevation: 5,
+        child: Container(
+          height: 180,
+          padding: const EdgeInsets.all(16.0),
+          child: Center(
+            child: Text(
+              '没有找到您的留言！',
+              style: TextStyle(
+                fontSize: 18,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     final currentQuote = widget.quotes[_currentQuoteIndex];
 
     return Card(
@@ -87,7 +125,7 @@ class _QuoteCardState extends State<QuoteCard>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '- ${currentQuote['author']}',
+                  '- ${currentQuote['desc']}',
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

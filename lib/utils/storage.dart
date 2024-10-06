@@ -34,7 +34,9 @@ class LocalStorage {
     } else if (value is List<String>) {
       await _prefs?.setStringList(key, value);
     } else if (value is Map<String, dynamic>) {
-    // 将 Map 转换为 JSON 字符串
+      // 将 Map 转换为 JSON 字符串
+      await _prefs?.setString(key, jsonEncode(value));
+    } else if (value is Object) {
       await _prefs?.setString(key, jsonEncode(value));
     } else {
       throw Exception("Unsupported value type");

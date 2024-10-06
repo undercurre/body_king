@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void _navigateToHome() async {
     await Future.delayed(const Duration(seconds: 2), () {});
     final globalState = Provider.of<GlobalState>(context, listen: false);
-    Navigator.pushReplacementNamed(context, globalState.token == null ? '/login' : '/');
+    Navigator.pushReplacementNamed(context, globalState.token == null || globalState.user_id == null ? '/login' : '/');
   }
 
   @override
