@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../apis/models/user_data_res.dart';
+import '../../apis/user_data.dart';
+import '../../services/api_response.dart';
+
 class TaskCompletionPage extends StatefulWidget {
   final String task;
 
@@ -12,6 +16,8 @@ class TaskCompletionPage extends StatefulWidget {
 class _TaskCompletionPageState extends State<TaskCompletionPage> {
   final TextEditingController _controller = TextEditingController();
   late String taskName;
+  DateTime? sleepStartTime;
+  DateTime? sleepEndTime;
 
   @override
   void initState() {
@@ -19,20 +25,87 @@ class _TaskCompletionPageState extends State<TaskCompletionPage> {
     taskName = widget.task;
   }
 
-  void _handleSubmit() {
+  Future<void> _handleSubmit() async {
     final String input = _controller.text;
-    if (input.isNotEmpty) {
+    if (input.isNotEmpty ||
+        (taskName == 'Sleep' &&
+            sleepStartTime != null &&
+            sleepEndTime != null)) {
       final int? number = int.tryParse(input);
-      if (number != null) {
-        // 在这里处理数字输入，例如保存或上传
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Number submitted: $number')),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please enter a valid number')),
-        );
+      if (taskName == 'Walk') {
+        if (number != null) {
+          await UserDataApi().fetchCreateUserData(step_count: number);
+        }
       }
+      if (taskName == 'Weight') {
+        if (number != null) {
+          await UserDataApi().fetchCreateUserData(weight: number);
+        }
+      }
+      if (taskName == 'Sleep') {
+        await UserDataApi().fetchCreateUserData(
+            sleep_start_time: sleepStartTime, sleep_end_time: sleepEndTime);
+      }
+      if (taskName == 'Water') {
+        if (number != null) {
+          await UserDataApi().fetchCreateUserData(water_cups: number);
+        }
+      }
+      if (taskName == 'Drinks') {
+        if (number != null) {
+          await UserDataApi().fetchCreateUserData(drink_ml: number);
+        }
+      }
+      if (taskName == 'Code') {
+        if (number != null) {
+          await UserDataApi().fetchCreateUserData(code_lines: number);
+        }
+      }
+      if (taskName == 'Snack') {
+        if (number != null) {
+          await UserDataApi().fetchCreateUserData(snack_calories: number);
+        }
+      }
+      if (taskName == 'Game') {
+        if (number != null) {
+          await UserDataApi().fetchCreateUserData(video_game_time: number);
+        }
+      }
+      if (taskName == 'Sport') {
+        if (number != null) {
+          await UserDataApi().fetchCreateUserData(exercise_calories: number);
+        }
+      }
+      if (taskName == 'Music') {
+        if (number != null) {
+          await UserDataApi().fetchCreateUserData(music_time: number);
+        }
+      }
+      Navigator.of(context).pop(true);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Please enter a valid number or select valid times')),
+      );
+    }
+  }
+
+  Future<void> _selectTime(BuildContext context, bool isStartTime) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (picked != null) {
+      setState(() {
+        final now = DateTime.now();
+        if (isStartTime) {
+          sleepStartTime = DateTime(
+              now.year, now.month, now.day, picked.hour, picked.minute);
+        } else {
+          sleepEndTime = DateTime(
+              now.year, now.month, now.day, picked.hour, picked.minute);
+        }
+      });
     }
   }
 
@@ -70,22 +143,38 @@ class _TaskCompletionPageState extends State<TaskCompletionPage> {
               ),
             ),
             SizedBox(height: 20),
-            TextField(
-              controller: _controller,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'Enter a number',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide(color: Colors.teal),
-                ),
-                labelStyle: TextStyle(color: Colors.teal),
+            if (taskName == 'Sleep') ...[
+              ElevatedButton(
+                onPressed: () => _selectTime(context, true),
+                child: Text(sleepStartTime != null
+                    ? 'Sleep Start Time: ${sleepStartTime!.hour}:${sleepStartTime!.minute}'
+                    : 'Select Sleep Start Time'),
               ),
-              cursorColor: Colors.teal,
-            ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () => _selectTime(context, false),
+                child: Text(sleepEndTime != null
+                    ? 'Sleep End Time: ${sleepEndTime!.hour}:${sleepEndTime!.minute}'
+                    : 'Select Sleep End Time'),
+              ),
+            ] else ...[
+              TextField(
+                controller: _controller,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: 'Enter a number',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(color: Colors.teal),
+                  ),
+                  labelStyle: TextStyle(color: Colors.teal),
+                ),
+                cursorColor: Colors.teal,
+              ),
+            ],
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: _handleSubmit,

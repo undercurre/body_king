@@ -10,21 +10,19 @@ class UserDataApi {
 
   UserDataApi() : apiService = ApiService(baseUrl: Config.baseUrl2);
 
-  Future<ApiResponse<CreateUserDataResponse>> fetchCreateMotto(
-    num step_count,
-    num weight,
-    String sleep_start_time,
-    String sleep_end_time,
-    num water_cups,
-    num drink_ml,
-    num code_lines,
-    num snack_calories,
-    num video_game_time,
-    num exercise_calories,
-    num music_time,
-    String created_at,
-    String updated_at,
-  ) async {
+  Future<ApiResponse<CreateUserDataResponse>> fetchCreateUserData({
+    num? step_count,
+    num? weight,
+    DateTime? sleep_start_time,
+    DateTime? sleep_end_time,
+    num? water_cups,
+    num? drink_ml,
+    num? code_lines,
+    num? snack_calories,
+    num? video_game_time,
+    num? exercise_calories,
+    num? music_time,
+  }) async {
     final data = {
       "user_id": GlobalState().user_id,
       'step_count': step_count,
@@ -38,8 +36,6 @@ class UserDataApi {
       'video_game_time': video_game_time,
       'exercise_calories': exercise_calories,
       'music_time': music_time,
-      'created_at': created_at,
-      'updated_at': updated_at
     };
     final responce = await apiService.post<CreateUserDataResponse>(
         '/user-data', data, CreateUserDataResponse.fromJson);

@@ -158,42 +158,41 @@ class _HomePageState extends State<HomePage> {
   Future<void> _loadUserDatas() async {
     ApiResponse<GetUserDataByUserResponse> res =
         await UserDataApi().fetchGetUserData();
-    Map<String, dynamic> walk =
-        progressData.firstWhere((element) => element["name"] == 'Walk');
-    walk['current'] = res.data.userData.step_count;
-    Map<String, dynamic> weight =
-        progressData.firstWhere((element) => element["name"] == 'Weight');
-    weight['current'] = res.data.userData.weight;
-    Map<String, dynamic> sleep =
-        progressData.firstWhere((element) => element["name"] == 'Sleep');
-    DateTime start = DateTime.parse(res.data.userData.sleep_start_time);
-    DateTime end = DateTime.parse(res.data.userData.sleep_end_time);
-    Duration sleepDuration = end.difference(start);
-    double hours = sleepDuration.inMinutes / 60.0;
-    sleep['current'] = hours;
-    Map<String, dynamic> water =
-        progressData.firstWhere((element) => element["name"] == 'Water');
-    water['current'] = res.data.userData.water_cups;
-    Map<String, dynamic> drinks =
-        progressData.firstWhere((element) => element["name"] == 'Drinks');
-    drinks['current'] = res.data.userData.drink_ml;
-    Map<String, dynamic> code =
-        progressData.firstWhere((element) => element["name"] == 'Code');
-    code['current'] = res.data.userData.code_lines;
-    Map<String, dynamic> snack =
-        progressData.firstWhere((element) => element["name"] == 'Snack');
-    snack['current'] = res.data.userData.snack_calories;
-    Map<String, dynamic> game =
-        progressData.firstWhere((element) => element["name"] == 'Game');
-    game['current'] = res.data.userData.video_game_time;
-    Map<String, dynamic> sport =
-        progressData.firstWhere((element) => element["name"] == 'Sport');
-    sport['current'] = res.data.userData.exercise_calories;
-    Map<String, dynamic> music =
-        progressData.firstWhere((element) => element["name"] == 'Music');
-    music['current'] = res.data.userData.music_time;
     setState(() {
-      progressData;
+      Map<String, dynamic> walk =
+      progressData.firstWhere((element) => element["name"] == 'Walk');
+      walk['current'] = res.data.userData.step_count;
+      Map<String, dynamic> weight =
+      progressData.firstWhere((element) => element["name"] == 'Weight');
+      weight['current'] = res.data.userData.weight;
+      Map<String, dynamic> sleep =
+      progressData.firstWhere((element) => element["name"] == 'Sleep');
+      DateTime start = DateTime.parse(res.data.userData.sleep_start_time);
+      DateTime end = DateTime.parse(res.data.userData.sleep_end_time);
+      Duration sleepDuration = end.difference(start);
+      double hours = sleepDuration.inMinutes / 60.0;
+      sleep['current'] = hours;
+      Map<String, dynamic> water =
+      progressData.firstWhere((element) => element["name"] == 'Water');
+      water['current'] = res.data.userData.water_cups;
+      Map<String, dynamic> drinks =
+      progressData.firstWhere((element) => element["name"] == 'Drinks');
+      drinks['current'] = res.data.userData.drink_ml;
+      Map<String, dynamic> code =
+      progressData.firstWhere((element) => element["name"] == 'Code');
+      code['current'] = res.data.userData.code_lines;
+      Map<String, dynamic> snack =
+      progressData.firstWhere((element) => element["name"] == 'Snack');
+      snack['current'] = res.data.userData.snack_calories;
+      Map<String, dynamic> game =
+      progressData.firstWhere((element) => element["name"] == 'Game');
+      game['current'] = res.data.userData.video_game_time;
+      Map<String, dynamic> sport =
+      progressData.firstWhere((element) => element["name"] == 'Sport');
+      sport['current'] = res.data.userData.exercise_calories;
+      Map<String, dynamic> music =
+      progressData.firstWhere((element) => element["name"] == 'Music');
+      music['current'] = res.data.userData.music_time;
     });
   }
 
@@ -296,7 +295,10 @@ class _HomePageState extends State<HomePage> {
                               context,
                               '/taskCompletion',
                               arguments: data['name'],
-                            )
+                            ).then((result) {
+                              print('加载新数据');
+                              _loadUserDatas();
+                            })
                           },
                         );
                       },
