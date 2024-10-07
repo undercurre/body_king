@@ -296,7 +296,6 @@ class _HomePageState extends State<HomePage> {
                               '/taskCompletion',
                               arguments: data['name'],
                             ).then((result) {
-                              print('加载新数据');
                               _loadUserDatas();
                             })
                           },
