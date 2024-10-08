@@ -42,7 +42,23 @@ class _MyAppState extends State<MyApp> {
       navigatorKey: MyApp.navigatorKey,
       // 将 navigatorKey 传递给 MaterialApp
       title: 'Recipe App',
-      theme: context.watch<GlobalState>().isDarkMode ? ThemeData.dark() : ThemeData.light(),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(color: Colors.black),
+          bodyMedium: TextStyle(color: Colors.black),
+          bodySmall: TextStyle(fontSize: 16, color: Colors.black54),
+        ),
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(color: Colors.white),
+          bodyMedium: TextStyle(color: Colors.white),
+          bodySmall: TextStyle(fontSize: 16, color: Colors.white54),
+        ),
+      ),
+      themeMode: context.watch<GlobalState>().isDarkMode ? ThemeMode.dark : ThemeMode.light,
       initialRoute: '/splash',
       routes: AppRoutes.routes,
     );

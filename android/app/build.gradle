@@ -37,6 +37,14 @@ android {
             signingConfig = signingConfigs.debug
         }
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            // 重命名 APK 文件
+            def newName = "body_king-${variant.buildType.name}.apk"
+            output.outputFileName = newName
+        }
+    }
 }
 
 flutter {

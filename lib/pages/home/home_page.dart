@@ -241,11 +241,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                           "Great start of the day, a little more to reach today's goals",
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: context.watch<GlobalState>().isDarkMode
-                                  ? Colors.white54
-                                  : Colors.black54),
+                          style: Theme.of(context).textTheme.bodySmall
                         )
                       ],
                     ),
@@ -263,12 +259,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     "today' situation",
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: context.watch<GlobalState>().isDarkMode
-                            ? Colors.white54
-                            : Colors.black54),
-                  ),
+                    style: Theme.of(context).textTheme.bodyLarge),
                   const SizedBox(height: 10),
                   Container(
                     color: Colors.transparent,

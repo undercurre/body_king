@@ -38,14 +38,10 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _publicKey = parsePublicKeyFromPem(response.data.publicKey); // Adjust according to your response structure
       });
-      if (kDebugMode) {
-        await LocalStorage().set('publicKey', response.data.publicKey);
-        print('Public Key fetched: $_publicKey');
-      }
+      await LocalStorage().set('publicKey', response.data.publicKey);
+      print('Public Key fetched: $_publicKey');
     } catch (e) {
-      if (kDebugMode) {
-        print('Failed to fetch public key: $e');
-      }
+      print('Failed to fetch public key: $e');
     }
   }
 
